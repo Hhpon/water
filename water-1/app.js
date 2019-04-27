@@ -8,7 +8,7 @@ let app = express();  // 把 express 实例化
 
 app.use(bodyParser.json()); // 使用中间件
 
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
     res.send('你访问到了water')
 })
 
