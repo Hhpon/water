@@ -8,6 +8,10 @@ let app = express();  // 把 express 实例化
 
 app.use(bodyParser.json()); // 使用中间件
 
+app.get('/',function(req,res){
+    res.send('你访问到了water')
+})
+
 app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路由实现的功能
     Article.create({
         time: req.body.time,
@@ -113,4 +117,4 @@ app.post('/down', function (req, res) {
     })
 })
 
-app.listen(3000, function () { console.log('服务器正在监听 3000 端口') });
+app.listen(3007, function () { console.log('服务器正在监听 3007 端口') });
