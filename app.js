@@ -8,7 +8,7 @@ let app = express();  // 把 express 实例化
 
 app.use(bodyParser.json()); // 使用中间件
 
-app.get('/',function(req,res){
+app.get('/', function (req, res) {
     res.send('你访问到了water')
 })
 
@@ -82,6 +82,8 @@ app.get('/getCode', function (req, res) {
 app.post('/upUserInfo', function (req, res) {
     simpleArticle.create({
         userInfo: req.body.userinfo,
+        nickName: req.body.userInfo.nickName,
+        avatarUrl: req.body.userInfo.avatarUrl,
         openId: req.body.openid,
         session_key: req.body.session_key
     }, (err, doc) => {
