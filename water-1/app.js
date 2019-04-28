@@ -18,7 +18,9 @@ app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路�
         local: req.body.local,
         num: req.body.num,
         openId: req.body.openid,
-        down: 0
+        down: 0,
+        nickName: req.body.nickName,
+        avatarUrl: req.body.avatarUrl
     }, (err, doc) => {
         if (err) {
             res.end('no');
@@ -82,8 +84,8 @@ app.get('/getCode', function (req, res) {
 app.post('/upUserInfo', function (req, res) {
     simpleArticle.create({
         userInfo: req.body.userinfo,
-        nickName: req.body.userInfo.nickName,
-        avatarUrl: req.body.userInfo.avatarUrl,
+        nickName: req.body.userinfo.nickName,
+        avatarUrl: req.body.userinfo.avatarUrl,
         openId: req.body.openid,
         session_key: req.body.session_key
     }, (err, doc) => {
