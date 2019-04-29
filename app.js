@@ -32,41 +32,159 @@ app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路�
 })
 
 app.get('/getArticle', function (req, res) {  // 新建的路由，以及此路由实现的功能
-    Article.find((err, doc) => {
-        res.json(doc)
-    });
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ down: 0 }, (err, doc) => {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
+})
+
+app.get('/getArticleDown', function (req, res) {  // 新建的路由，以及此路由实现的功能
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ down: 1 }, (err, doc) => {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
 })
 
 app.get('/searchTime', function (req, res) {
+    let list = Number(req.query.list)
+    let list1 = list - 10
     let Time = req.query.time
-    Article.find({ time: Time }, function (err, doc) {
-        res.json(doc)
-    });
+    Article.find({ time: Time, down: 0 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
+})
+
+app.get('/searchTimeDown', function (req, res) {
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    let Time = req.query.time
+    Article.find({ time: Time, down: 1 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
 })
 
 app.get('/searchTimeAndNum', function (req, res) {
     let Time = req.query.time
     let Num = req.query.num
-    Article.find({ time: Time, num: Num }, function (err, doc) {
-        res.json(doc)
-    });
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, num: Num, down: 0 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
+})
+
+app.get('/searchTimeAndNumDown', function (req, res) {
+    let Time = req.query.time
+    let Num = req.query.num
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, num: Num, down: 1 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
 })
 
 app.get('/searchTimeAndLocal', function (req, res) {
     let Time = req.query.time
     let Local = req.query.local
-    Article.find({ time: Time, local: Local }, function (err, doc) {
-        res.json(doc)
-    });
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, local: Local, down: 0 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
+})
+
+app.get('/searchTimeAndLocalDown', function (req, res) {
+    let Time = req.query.time
+    let Local = req.query.local
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, local: Local, down: 1 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
 })
 
 app.get('/searchAll', function (req, res) {
     let Time = req.query.time
     let Local = req.query.local
     let Num = req.query.num
-    Article.find({ time: Time, local: Local, num: Num }, function (err, doc) {
-        res.json(doc)
-    });
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, local: Local, num: Num, down: 0 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
+})
+
+app.get('/searchAllDown', function (req, res) {
+    let Time = req.query.time
+    let Local = req.query.local
+    let Num = req.query.num
+    let list = Number(req.query.list)
+    let list1 = list - 10
+    Article.find({ time: Time, local: Local, num: Num, down: 1 }, function (err, doc) {
+        if (doc.length > list1) {
+            res.json(doc)
+        } if (doc.length <= list1) {
+            res.send('ok')
+        } if (err) {
+            console.log(err)
+        }
+    }).limit(list);
 })
 
 app.get('/getCode', function (req, res) {
