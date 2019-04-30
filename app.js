@@ -13,21 +13,29 @@ app.get('/', function (req, res) {
 })
 
 app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路由实现的功能
-    Article.create({
-        time: req.body.time,
-        local: req.body.local,
-        num: req.body.num,
-        openId: req.body.openid,
-        down: 0,
-        nickName: req.body.nickName,
-        avatarUrl: req.body.avatarUrl
-    }, (err, doc) => {
-        if (err) {
-            res.end('no');
-        } else {
-            res.end('ok');
+    Article.find({ local: req.body.local, num: req.body.num, down: 0}, function (err, doc) {
+        if (doc.length === 0) {
+            Article.create({
+                time: req.body.time,
+                local: req.body.local,
+                num: req.body.num,
+                openId: req.body.openid,
+                down: 0,
+                nickName: req.body.nickName,
+                avatarUrl: req.body.avatarUrl
+            }, (err, doc) => {
+                if (err) {
+                    res.end('err');
+                } else {
+                    res.end('ok');
+                }
+            });
+        }else{
+            res.send('no')
         }
-    });
+    })
+
+
 
 })
 
