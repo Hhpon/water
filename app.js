@@ -13,16 +13,19 @@ app.get('/', function (req, res) {
 })
 
 app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路由实现的功能
-    Article.find({ local: req.body.local, num: req.body.num, down: 0}, function (err, doc) {
+    Article.find({ local0: req.body.local[0], local1: req.body.local[1], local2: req.body.local[2], num: req.body.num, down: 0 }, function (err, doc) {
         if (doc.length === 0) {
             Article.create({
                 time: req.body.time,
-                local: req.body.local,
+                local0: req.body.local[0],
+                local1: req.body.local[1],
+                local2: req.body.local[2],
                 num: req.body.num,
                 openId: req.body.openid,
                 down: 0,
                 nickName: req.body.nickName,
-                avatarUrl: req.body.avatarUrl
+                avatarUrl: req.body.avatarUrl,
+                now: req.body.now
             }, (err, doc) => {
                 if (err) {
                     res.end('err');
@@ -30,7 +33,7 @@ app.post('/upArticle', function (req, res) {  // 新建的路由，以及此路�
                     res.end('ok');
                 }
             });
-        }else{
+        } else {
             res.send('no')
         }
     })
@@ -50,7 +53,7 @@ app.get('/getArticle', function (req, res) {  // 新建的路由，以及此路�
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/getArticleDown', function (req, res) {  // 新建的路由，以及此路由实现的功能
@@ -64,7 +67,7 @@ app.get('/getArticleDown', function (req, res) {  // 新建的路由，以及此
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTime', function (req, res) {
@@ -74,12 +77,14 @@ app.get('/searchTime', function (req, res) {
     Article.find({ time: Time, down: 0 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTimeDown', function (req, res) {
@@ -89,12 +94,14 @@ app.get('/searchTimeDown', function (req, res) {
     Article.find({ time: Time, down: 1 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTimeAndNum', function (req, res) {
@@ -105,12 +112,14 @@ app.get('/searchTimeAndNum', function (req, res) {
     Article.find({ time: Time, num: Num, down: 0 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTimeAndNumDown', function (req, res) {
@@ -121,78 +130,96 @@ app.get('/searchTimeAndNumDown', function (req, res) {
     Article.find({ time: Time, num: Num, down: 1 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTimeAndLocal', function (req, res) {
     let Time = req.query.time
-    let Local = req.query.local
+    let Local0 = req.query.local0
+    let Local1 = req.query.local1
+    let Local2 = req.query.local2
     let list = Number(req.query.list)
     let list1 = list - 10
-    Article.find({ time: Time, local: Local, down: 0 }, function (err, doc) {
+    Article.find({ time: Time, local0: Local0, local1: Local1, local2: Local2, down: 0 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchTimeAndLocalDown', function (req, res) {
     let Time = req.query.time
-    let Local = req.query.local
+    let Local0 = req.query.local0
+    let Local1 = req.query.local1
+    let Local2 = req.query.local2
     let list = Number(req.query.list)
     let list1 = list - 10
-    Article.find({ time: Time, local: Local, down: 1 }, function (err, doc) {
+    Article.find({ time: Time, local0: Local0, local1: Local1, local2: Local2, down: 1 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchAll', function (req, res) {
     let Time = req.query.time
-    let Local = req.query.local
+    let Local0 = req.query.local0
+    let Local1 = req.query.local1
+    let Local2 = req.query.local2
     let Num = req.query.num
     let list = Number(req.query.list)
     let list1 = list - 10
-    Article.find({ time: Time, local: Local, num: Num, down: 0 }, function (err, doc) {
+    Article.find({ time: Time, local0: Local0, local1: Local1, local2: Local2, num: Num, down: 0 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/searchAllDown', function (req, res) {
     let Time = req.query.time
-    let Local = req.query.local
+    let Local0 = req.query.local0
+    let Local1 = req.query.local1
+    let Local2 = req.query.local2
     let Num = req.query.num
     let list = Number(req.query.list)
     let list1 = list - 10
-    Article.find({ time: Time, local: Local, num: Num, down: 1 }, function (err, doc) {
+    Article.find({ time: Time, local0: Local0, local1: Local1, local2: Local2, num: Num, down: 1 }, function (err, doc) {
         if (doc.length > list1) {
             res.json(doc)
-        } if (doc.length <= list1) {
+        } if (doc.length <= list1 && doc.length !== 0) {
             res.send('ok')
+        } if (doc.length === 0) {
+            res.send('nothing')
         } if (err) {
             console.log(err)
         }
-    }).limit(list);
+    }).sort({ now: -1 }).limit(list);
 })
 
 app.get('/getCode', function (req, res) {

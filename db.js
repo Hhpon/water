@@ -13,10 +13,13 @@ const articleSchema = new mongoose.Schema({  //schema
     avatarUrl: Object,
     nickName: Object,
     time: String,
-    local: Object,
+    local0: String,
+    local1: String,
+    local2: String,
     num: String,
     openId: String,
-    down: Number
+    down: Number,
+    now: Number
 })
 
 module.exports = mongoose.model('article', articleSchema);  // model
